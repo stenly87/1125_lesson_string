@@ -6,6 +6,7 @@ namespace _1125_lesson_string
     {
         static void Main(string[] args)
         {
+            goto lesson101024;
             // лекция "Строки в C#"
             // string - хранение строк
             // string userString = Console.ReadLine();
@@ -137,6 +138,85 @@ namespace _1125_lesson_string
             {
                 Console.WriteLine(str);
             }
+
+            // форматирование строк
+            lesson101024:
+
+            string sample = $"{"че-нибудь другое"} {11} {true}";
+            // форматирование с аргументами, аргументы подставляются
+            // согласно их индексам вместо {n}
+            sample = string.Format("123 {0} {0} {1}", 10, 20);
+            Console.WriteLine(sample);
+            // двоичное представление числа
+            sample = 123.ToString("b");
+            Console.WriteLine(sample);
+
+            // 16-ричное представление числа (x - в нижнем регистре, X - в верхем регистре)
+            sample = 123111.ToString("x");
+            Console.WriteLine(sample);
+            // можно использовать форматирование в скобках при
+            // выводе аргумента
+            sample = string.Format("123 {0:b}", 1024);
+            Console.WriteLine(sample);
+
+            // можно округлить дробь (сократить остаток после
+            // запятой, указав формат 
+            sample = 123.111.ToString("N2");
+            Console.WriteLine(sample);
+
+            // аналог через string.Format (сокращение остатка)
+            sample = string.Format("{0:N2}", 10000000024.5555);
+            Console.WriteLine(sample);
+
+            // добавляется символ рубля ₽
+            // в консолях видимо не работает
+            sample = string.Format("{0:c}", 10024.55);
+            Console.WriteLine(sample);
+            // тоже самое через ToString
+            Console.WriteLine(123.ToString("c"));
+
+            // представление процентов через ToString
+            Console.WriteLine(0.15.ToString("p"));
+
+            // представление дроби с основанием e через ToString
+            Console.WriteLine(Math.Cos(Math.E).ToString("e"));
+
+            // работа с временем
+            // есть типы данных: DateTime, DateOnly, TimeOnly
+            // текущее время в локальном часовом поясе
+            DateTime time = DateTime.Now;
+            Console.WriteLine(time.ToString());
+            // текущее время в универсальном часовом поясе 
+            // Владивосток = UTC+10
+            time = DateTime.UtcNow;
+            Console.WriteLine(time.ToString());
+            // на типе DateTime доступен ряд методов для изменения даты
+            // при этом методы возвращают новое значение, не изменяя старое
+            time = time.AddHours(10);
+            Console.WriteLine(time.ToString());
+
+            // сохранить дату и время в число (8 байт)
+            long l = time.ToBinary();
+            // получить дату из числа
+            time = DateTime.FromBinary(l);
+
+            // при форматировании даты в виде строки можно использовать
+            // множество аргументов для видоизменения результата
+            // варианты можно посмотреть в подсказке
+            Console.WriteLine(time.ToString("dd.MM.yyyy zzz"));
+            // даты можно вычитать друг из друга
+            // в результате получаем TimeSpan - промежуток, он может включать
+            // любые значения времени, в т.ч. отрицательные
+            TimeSpan span = time.Subtract(DateTime.UtcNow);            
+            Console.WriteLine(span.TotalSeconds);
+
+            // даты можно сравнивать
+            // CompareTo возвращает число
+            // отрицательное значит что time раньше чем DateTime.UtcNow
+            // положительное значит что DateTime.UtcNow раньше чем time
+            // 0 значит что DateTime.UtcNow равно time
+            int compare = time.CompareTo(DateTime.UtcNow);
+            Console.WriteLine(compare);
         }
     }
 }
